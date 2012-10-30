@@ -4,14 +4,23 @@
 using namespace std;
 
 int factor(long long input, long long& factor1, long long& factor2) {
-	int x = 2;
+	
+	//Checks if 2 factors it
+	if(input % 2 == 0) {
+		factor1 = 2;
+		factor2 = input / 2;
+		return 0;
+	}
+	
+	//Only checks if odd numbers factor it
+	int x = 3;
 	while(x <= input / 2) {
 		if(input % x == 0) {
 			factor1 = x;
 			factor2 = input / x;
 			return 0;
 		}
-		x++;
+		x+= 2;
 	}
 	return 1;
 }
