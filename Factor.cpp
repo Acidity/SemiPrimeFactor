@@ -5,7 +5,8 @@ using namespace std;
 
 int factor(long long input, long long& factor1, long long& factor2) {
 	
-	//Checks if 2 factors it
+	//If a number is factorable by an even number, it isfactorable by 2,
+	//so no need to waste cycles checking for even factors > 2.
 	if(input % 2 == 0) {
 		factor1 = 2;
 		factor2 = input / 2;
@@ -26,17 +27,27 @@ int factor(long long input, long long& factor1, long long& factor2) {
 }
 
 int main() {
+	//Using long long allows for 64 bit integers
 	long long input, factor1, factor2;
+
+	//Prompts the user for input
 	cout << "Please enter the positive integer you wish to factor: ";
 	cin >> input;
-	//cout << input << endl;
+
+	//Verifies that the input is valid.
 	if(input < 0) {
-		cout << "Negative numbers are not valid." << endl;
+		cout << "Only positive integers are valid." << endl;
 		return 0;
 	}
+
+	//Gets the System Time on Windows computers.
+	//Used to time how long it takes to complete.
 	SYSTEMTIME st, et;
 	GetSystemTime(&st);
 	long long start = st.wMilliseconds + st.wSecond * 1000 + st.wMinute * 60000 + st.wHour * 3600000;
+
+	//If 2 integer factors are found, then output them and indicate how long it took to complete
+	//Otherwise, inform them that it is a prime number, and exit
 	if(factor(input, factor1, factor2) == 0) {
 		cout << "Factor 1: " << factor1 << endl;
 		cout << "Factor 2: " << factor2 << endl;
