@@ -5,7 +5,7 @@ using namespace std;
 
 int factor(long long input, long long& factor1, long long& factor2) {
 	
-	//If a number is factorable by an even number, it isfactorable by 2,
+	//If a number is factorable by an even number, it is factorable by 2,
 	//so no need to waste cycles checking for even factors > 2.
 	if(input % 2 == 0) {
 		factor1 = 2;
@@ -15,7 +15,7 @@ int factor(long long input, long long& factor1, long long& factor2) {
 	
 	//Only checks if odd numbers factor it
 	int x = 3;
-	while(x <= input / 2) {
+	do {
 		if(input % x == 0) {
 			factor1 = x;
 			factor2 = input / x;
@@ -23,6 +23,7 @@ int factor(long long input, long long& factor1, long long& factor2) {
 		}
 		x+= 2;
 	}
+	while(x <= input / 2);
 	return 1;
 }
 
@@ -35,8 +36,8 @@ int main() {
 	cin >> input;
 
 	//Verifies that the input is valid.
-	if(input < 0) {
-		cout << "Only positive integers are valid." << endl;
+	if(input <= 0) {
+		cout << "Only positive integers are valid. (Or your value is too high)" << endl;
 		return 0;
 	}
 
