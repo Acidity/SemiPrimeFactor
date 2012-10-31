@@ -3,6 +3,31 @@
 
 using namespace std;
 
+bool isPrime(long long input) {
+
+	//If the number is divisible by 2 or 3 (and isn't 2 or 3) then it isn't a prime
+	if((input % 2 == 0 || input % 3 == 0) && (input != 2 && input != 3)) {
+		return false;
+	}
+
+	int x = 1;
+
+	//If it's not divisible by 2 or 3, but isn't a prime
+	//then it is divisible by (6x +- 1) for some x < sqrt(input)
+	while((6 * x + 1) < sqrt(input)) {
+		if(input % (6 * x + 1) == 0) {
+			return false;
+		}
+		if(input % (6 * x - 1) == 0) {
+			return false;
+		}
+		x++;
+	}
+
+	//If it's not composite, then it must be prime!
+	return true;
+}
+
 int factor(long long input, long long& factor1, long long& factor2) {
 	
 	//If a number is factorable by an even number, it is factorable by 2,
@@ -28,6 +53,11 @@ int factor(long long input, long long& factor1, long long& factor2) {
 }
 
 int main() {
+	//Check if the input is a prime before factoring?
+	//Currently disabled because it increases the length of time
+	//to compute the factors
+	bool checkPrime = false;
+
 	//Using long long allows for 64 bit integers
 	long long input, factor1, factor2;
 
@@ -46,6 +76,16 @@ int main() {
 	SYSTEMTIME st, et;
 	GetSystemTime(&st);
 	long long start = st.wMilliseconds + st.wSecond * 1000 + st.wMinute * 60000 + st.wHour * 3600000;
+	
+	//Checks if the number is prime.
+	if(checkPrime && isPrime(input)) {
+		cout << "The input number is prime!" << endl;
+		GetSystemTime(&et);
+		long long end = et.wMilliseconds + et.wSecond * 1000 + et.wMinute * 60000 + et.wHour * 3600000;
+		cout << "Completed in: " << (end - start) << " milliseconds." << endl;
+		cin.get();
+		return 1;
+	}
 
 	//If 2 integer factors are found, then output them and indicate how long it took to complete
 	//Otherwise, inform them that it is a prime number, and exit
