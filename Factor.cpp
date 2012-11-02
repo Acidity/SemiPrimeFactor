@@ -1,5 +1,6 @@
 #include <iostream>
 #include <windows.h>
+#include <math.h>
 
 using namespace std;
 
@@ -35,6 +36,16 @@ int factor(long long input, long long& factor1, long long& factor2) {
 	if(input % 2 == 0) {
 		factor1 = 2;
 		factor2 = input / 2;
+		return 0;
+	}
+
+	//Perfect Square factoring
+	long long difInSquares = pow((floor(sqrt(input)) + 1), 2) - input;
+	if(sqrt(difInSquares) == floor(sqrt(difInSquares))) {
+		long long nonAdj1 = sqrt(difInSquares);
+		long long nonAdj2 = sqrt(floor(sqrt(input)) + 1);
+		factor1 = abs(nonAdj1 - nonAdj2);
+		factor2 = abs(nonAdj1 + nonAdj2);
 		return 0;
 	}
 	
