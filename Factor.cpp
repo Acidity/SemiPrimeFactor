@@ -1,5 +1,6 @@
 #include <iostream>
-#include <windows.h>
+#include <sys/time.h>
+#include <math.h>
 
 using namespace std;
 
@@ -73,15 +74,15 @@ int main() {
 
 	//Gets the System Time on Windows computers.
 	//Used to time how long it takes to complete.
-	SYSTEMTIME st, et;
-	GetSystemTime(&st);
-	long long start = st.wMilliseconds + st.wSecond * 1000 + st.wMinute * 60000 + st.wHour * 3600000;
+	timeval st, et;
+	gettimeofday(&st, NULL);
+	long long start = (st.tv_usec/1000) + (st.tv_sec * 1000);
 	
 	//Checks if the number is prime.
 	if(checkPrime && isPrime(input)) {
 		cout << "The input number is prime!" << endl;
-		GetSystemTime(&et);
-		long long end = et.wMilliseconds + et.wSecond * 1000 + et.wMinute * 60000 + et.wHour * 3600000;
+		gettimeofday(&et, NULL);
+	  long long end = (et.tv_usec/1000) + (et.tv_sec * 1000);
 		cout << "Completed in: " << (end - start) << " milliseconds." << endl;
 		cin.get();
 		return 1;
@@ -92,8 +93,8 @@ int main() {
 	if(factor(input, factor1, factor2) == 0) {
 		cout << "Factor 1: " << factor1 << endl;
 		cout << "Factor 2: " << factor2 << endl;
-		GetSystemTime(&et);
-		long long end = et.wMilliseconds + et.wSecond * 1000 + et.wMinute * 60000 + et.wHour * 3600000;
+		gettimeofday(&et, NULL);
+	  long long end = (et.tv_usec/1000) + (et.tv_sec * 1000);
 		cout << "Completed in: " << (end - start) << " milliseconds." << endl;
 		cin.get();
 		return 0;
