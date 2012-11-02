@@ -1,9 +1,10 @@
 #include <iostream>
 #include <windows.h>
+#include "bigint\BigIntegerLibrary.hh"
 
 using namespace std;
 
-bool isPrime(long long input) {
+bool isPrime(BigInteger input) {
 
 	//If the number is divisible by 2 or 3 (and isn't 2 or 3) then it isn't a prime
 	if((input % 2 == 0 || input % 3 == 0) && (input != 2 && input != 3)) {
@@ -14,7 +15,7 @@ bool isPrime(long long input) {
 
 	//If it's not divisible by 2 or 3, but isn't a prime
 	//then it is divisible by (6x +- 1) for some x < sqrt(input)
-	while((6 * x + 1) < sqrt(input)) {
+/*	while((6 * x + 1) < sqrt(input)) {
 		if(input % (6 * x + 1) == 0) {
 			return false;
 		}
@@ -22,13 +23,13 @@ bool isPrime(long long input) {
 			return false;
 		}
 		x++;
-	}
+	}*/
 
 	//If it's not composite, then it must be prime!
 	return true;
 }
 
-int factor(long long input, long long& factor1, long long& factor2) {
+int factor(BigInteger input, BigInteger& factor1, BigInteger& factor2) {
 	
 	//If a number is factorable by an even number, it is factorable by 2,
 	//so no need to waste cycles checking for even factors > 2.
@@ -39,14 +40,15 @@ int factor(long long input, long long& factor1, long long& factor2) {
 	}
 	
 	//Only checks if odd numbers factor it
-	int x = 3;
+	BigInteger x = 3;
 	do {
+		//cout << "Testing: " << x << endl;
 		if(input % x == 0) {
 			factor1 = x;
 			factor2 = input / x;
 			return 0;
 		}
-		x+= 2;
+		x += 2;
 	}
 	while(x <= input / 2);
 	return 1;
@@ -59,11 +61,13 @@ int main() {
 	bool checkPrime = false;
 
 	//Using long long allows for 64 bit integers
-	long long input, factor1, factor2;
+	BigInteger input, factor1, factor2;
 
 	//Prompts the user for input
 	cout << "Please enter the positive integer you wish to factor: ";
-	cin >> input;
+	string inputString;
+	cin >> inputString;
+	input = stringToBigInteger(inputString);
 
 	//Verifies that the input is valid.
 	if(input <= 0) {
