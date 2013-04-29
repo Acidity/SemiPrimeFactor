@@ -109,7 +109,7 @@ int main() {
 		cin.get();
 		return 0;
 	} else {
-		cout << "No integer factor greater than 1 or equal to itself exists for this input." << endl;
+		cout << "No integer factor greater than 1 and not equal to itself exists for this input." << endl;
 		cin.get();
 		return 1;
 	}
